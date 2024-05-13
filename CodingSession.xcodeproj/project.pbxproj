@@ -26,7 +26,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CE782A6C2BF26C480097DC8B /* CodingSession.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CodingSession.entitlements; sourceTree = "<group>"; };
 		CE782A6D2BF26C990097DC8B /* GalleryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewModel.swift; sourceTree = "<group>"; };
 		CE782A6F2BF2715A0097DC8B /* PhotosProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosProvider.swift; sourceTree = "<group>"; };
 		CE782A712BF272F70097DC8B /* ViewControllerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerCell.swift; sourceTree = "<group>"; };
@@ -79,7 +78,6 @@
 		D3D03FB32AF27571006BD5C8 /* CodingSession */ = {
 			isa = PBXGroup;
 			children = (
-				CE782A6C2BF26C480097DC8B /* CodingSession.entitlements */,
 				D3D03FB42AF27571006BD5C8 /* AppDelegate.swift */,
 				D3D03FB62AF27571006BD5C8 /* SceneDelegate.swift */,
 				D3D03FB82AF27571006BD5C8 /* ViewController.swift */,

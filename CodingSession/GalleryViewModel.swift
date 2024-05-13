@@ -12,11 +12,10 @@ import RxRelay
 class GalleryViewModel {
     private let videoProvider: VideoProviderProtocol
     
-    var cellControllers: PublishRelay<[CellController]> = .init()
+    private(set) var cellControllers: PublishRelay<[CellController]> = .init()
+    private(set) var settingsButtonHidden: BehaviorRelay<Bool> = .init(value: true)
     
     private let mapper: (PHAsset) -> CellController
-    
-    var requestSettings: (() -> Void)?
     
     init(videoProvider: VideoProviderProtocol, mapper: @escaping (PHAsset) -> CellController) {
         self.videoProvider = videoProvider
@@ -34,18 +33,14 @@ class GalleryViewModel {
         checkAuthorizationStatus()
     }
     
-    func checkAuthorizationStatus() {
+    private func checkAuthorizationStatus() {
         PHPhotoLibrary.requestAuthorization(for: .readWrite) { [weak self] status in
             switch status {
-            case .notDetermined:
+            case .restricted, .denied:
+                self?.settingsButtonHidden.accept(false)
+            case .authorized, .limited, .notDetermined:
                 self?.fetchPhotos()
-            case .restricted:
-                self?.requestSettings?()
-            case .denied:
-                self?.requestSettings?()
-            case .authorized:
-                self?.fetchPhotos()
-            case .limited:
+            @unknown default:
                 self?.fetchPhotos()
             }
         }

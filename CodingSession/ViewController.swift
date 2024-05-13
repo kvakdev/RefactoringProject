@@ -10,9 +10,21 @@ import RxSwift
 import SnapKit
 import Accelerate
 import Photos
+import RxCocoa
 
 class ViewController: UIViewController {
+    
     private let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private lazy var settingsButton: UIButton = {
+        var config = UIButton.Configuration.bordered()
+        config.title = "Go to settings and allow access to videos"
+        
+        let button = UIButton(configuration: config, primaryAction: .init(handler: { _ in
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+        }))
+        
+        return button
+    }()
     
     lazy var dataSource = GalleryCollectionViewDataSource(collectionView: collectionView, itemSize: UIConstants.itemSize)
     let viewModel: GalleryViewModel
@@ -32,27 +44,24 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         setupCollectionView()
+        setupSettingsButton()
         
         viewModel.cellControllers.observe(on: MainScheduler()).subscribe { [weak self] controllers in
             self?.dataSource.set(cellControllers: controllers)
         }
         .disposed(by: disposeBag)
         
-        viewModel.requestSettings = { [weak self] in
-            DispatchQueue.main.async {
-                let alert = UIAlertController(title: "Access denied", message: "Please go to settings and allow access to videos", preferredStyle: .actionSheet)
-                let settingsAction = UIAlertAction(title: "Settings", style: .default) { _ in
-                    self?.dismiss(animated: true) {
-                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-                    }
-                }
-                alert.addAction(settingsAction)
-                
-                self?.present(alert, animated: true)
-            }
-        }
+        viewModel.settingsButtonHidden.bind(to: self.settingsButton.rx.isHidden).disposed(by: self.disposeBag)
         
         viewModel.start()
+    }
+    
+    private func setupSettingsButton() {
+        view.addSubview(settingsButton)
+        
+        settingsButton.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
     }
     
     private func setupCollectionView() {
