@@ -28,9 +28,9 @@ class GalleryCollectionViewDataSource: NSObject, UICollectionViewDataSource, UIC
         
         Task { @MainActor in
             let imageData = await controller.getImagePNGData()
-            cell.image = UIImage(data: imageData)
+            
+            cell.set(image: UIImage(data: imageData) ?? UIImage(systemName: "photo.fill")!, title: controller.title)
         }
-        cell.title = controller.title
         
         return cell
     }

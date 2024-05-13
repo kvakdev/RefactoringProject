@@ -25,18 +25,25 @@ class GalleryViewModel {
     
     var cellControllers: PublishRelay<[CellController]> = .init()
     
-    let cellWidth: CGFloat
+    private let cellWidth: CGFloat
+    private let mapper: (PHAsset, Double) -> CellController
     
-    init(videoProvider: VideoProviderProtocol, cellWidth: CGFloat) {
+    init(videoProvider: VideoProviderProtocol, cellWidth: CGFloat, mapper: @escaping (PHAsset, Double) -> CellController) {
         self.videoProvider = videoProvider
         self.cellWidth = cellWidth
+        self.mapper = mapper
     }
     
     func fetchPhotos() {
         let videos = videoProvider.getVideos()
+        let cellControllers = videos.map { self.mapper($0, cellWidth) }
         
-        var controllers: [CellController] = []
-        
+        self.cellControllers.accept(cellControllers)
+    }
+}
+
+struct AssetMapper {
+    static func map(asset: PHAsset, imageSize: Double) -> CellController {
         let manager = PHImageManager.default()
         let requestOptions = PHImageRequestOptions()
         requestOptions.isSynchronous = false
@@ -47,24 +54,18 @@ class GalleryViewModel {
         formatter.zeroFormattingBehavior = [.pad]
         formatter.unitsStyle = .positional
         
-        let targetSize = CGSize(width: 130, height: 130)
+        let title = formatter.string(from: asset.duration) ?? ""
         
-        videos.forEach { asset in
-            let title = formatter.string(from: asset.duration) ?? ""
-            
-            let controller = CellController(title: title) {
-                let resultImageData = await withCheckedContinuation { continuation in
-                    manager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFill, options: requestOptions) { (image, _) in
-                        continuation.resume(returning: image?.pngData())
-                    }
+        let controller = CellController(title: title) {
+            let resultImageData = await withCheckedContinuation { continuation in
+                manager.requestImage(for: asset, targetSize: CGSize(width: imageSize, height: imageSize), contentMode: .aspectFill, options: requestOptions) { (image, _) in
+                    continuation.resume(returning: image?.pngData())
                 }
-                
-                return resultImageData ?? Data()
             }
             
-            controllers.append(controller)
+            return resultImageData ?? Data()
         }
         
-        self.cellControllers.accept(controllers)
+        return controller
     }
 }

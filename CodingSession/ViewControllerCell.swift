@@ -7,28 +7,13 @@
 
 import UIKit
 
-
 class ViewControllerCell: UICollectionViewCell {
-    
-    var thumbImageView: UIImageView!
-    var durationLabel: UILabel!
-    
-    var image: UIImage! {
-        didSet {
-            thumbImageView.image = image
-        }
-    }
-    
-    var title: String! {
-        didSet {
-            durationLabel.text = title
-        }
-    }
+    private let thumbImageView: UIImageView = UIImageView(frame: .zero)
+    private let durationLabel: UILabel = UILabel(frame: .zero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        thumbImageView = UIImageView(frame: .zero)
         contentView.addSubview(thumbImageView)
         thumbImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -36,12 +21,16 @@ class ViewControllerCell: UICollectionViewCell {
         thumbImageView.contentMode = .scaleAspectFill
         thumbImageView.clipsToBounds = true
         
-        durationLabel = UILabel(frame: .zero)
         contentView.addSubview(durationLabel)
         durationLabel.snp.makeConstraints { make in
             make.leading.equalTo(8)
             make.bottom.equalTo(-8)
         }
+    }
+    
+    func set(image: UIImage, title: String) {
+        self.thumbImageView.image = image
+        self.durationLabel.text = title
     }
     
     required init?(coder: NSCoder) {
