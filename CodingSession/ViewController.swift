@@ -14,6 +14,7 @@ import Photos
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var collectionView: UICollectionView!
+    let viewModel = GalleryViewModel()
     
     var assets: [PHAsset] = [] {
         didSet {
@@ -24,27 +25,23 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupCollectionView()
+        fetchPhotos()
+    }
+    
+    private func setupCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         collectionView.register(ViewControllerCell.self, forCellWithReuseIdentifier: "ViewControllerCell")
-        
-        let fetchOptions = PHFetchOptions()
-        fetchOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.video.rawValue)
-        
-        let fetchResult = PHAsset.fetchAssets(with: fetchOptions)
-        var videoAssets: [PHAsset] = []
-           
-        fetchResult.enumerateObjects { (asset, _, _) in
-            videoAssets.append(asset)
-        }
-        
-        assets = videoAssets
-        
         collectionView.delegate = self
         collectionView.dataSource = self
+    }
+    
+    func fetchPhotos() {
+        assets = viewModel.fetchPhotos()
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
