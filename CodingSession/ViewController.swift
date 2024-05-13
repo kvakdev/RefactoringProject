@@ -14,7 +14,7 @@ import Photos
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var collectionView: UICollectionView!
-    let viewModel = GalleryViewModel()
+    let viewModel = GalleryViewModel(videoProvider: VideoProvider())
     
     var assets: [PHAsset] = [] {
         didSet {

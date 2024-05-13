@@ -10,19 +10,13 @@ import RxSwift
 import Photos
 
 class GalleryViewModel {
+    private let videoProvider: VideoProviderProtocol
     
-    func fetchPhotos() -> [PHAsset] {
-        let fetchOptions = PHFetchOptions()
-        fetchOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.video.rawValue)
-        
-        let fetchResult = PHAsset.fetchAssets(with: fetchOptions)
-        var videoAssets: [PHAsset] = []
-           
-        fetchResult.enumerateObjects { (asset, _, _) in
-            videoAssets.append(asset)
-        }
-        
-        return videoAssets
+    init(videoProvider: VideoProviderProtocol) {
+        self.videoProvider = videoProvider
     }
     
+    func fetchPhotos() -> [PHAsset] {
+        return videoProvider.getVideos()
+    }
 }
