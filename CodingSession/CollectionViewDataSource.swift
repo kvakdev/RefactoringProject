@@ -19,11 +19,12 @@ class GalleryCollectionViewDataSource: NSObject, UICollectionViewDataSource, UIC
     
     func set(cellControllers: [CellController]) {
         self.cellControllers = cellControllers
+        self.collectionView.register(type: ViewControllerCell.self)
         self.collectionView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: ViewControllerCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ViewControllerCell", for: indexPath) as! ViewControllerCell
+        let cell: ViewControllerCell = collectionView.dequeue(cellForItemAt: indexPath)
         let controller = cellControllers[indexPath.row]
         
         Task { @MainActor in
