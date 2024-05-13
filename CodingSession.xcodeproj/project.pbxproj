@@ -13,6 +13,7 @@
 		CE782A742BF282810097DC8B /* CollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE782A732BF282810097DC8B /* CollectionViewDataSource.swift */; };
 		CEF869A42BF28B0B00BF441D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF869A32BF28B0B00BF441D /* Constants.swift */; };
 		CEF869A62BF293C200BF441D /* AssetMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF869A52BF293C200BF441D /* AssetMapper.swift */; };
+		CEF869A82BF2972A00BF441D /* CellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF869A72BF2972A00BF441D /* CellController.swift */; };
 		D3D03FB52AF27571006BD5C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D03FB42AF27571006BD5C8 /* AppDelegate.swift */; };
 		D3D03FB72AF27571006BD5C8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D03FB62AF27571006BD5C8 /* SceneDelegate.swift */; };
 		D3D03FB92AF27571006BD5C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D03FB82AF27571006BD5C8 /* ViewController.swift */; };
@@ -32,6 +33,7 @@
 		CE782A732BF282810097DC8B /* CollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDataSource.swift; sourceTree = "<group>"; };
 		CEF869A32BF28B0B00BF441D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CEF869A52BF293C200BF441D /* AssetMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetMapper.swift; sourceTree = "<group>"; };
+		CEF869A72BF2972A00BF441D /* CellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellController.swift; sourceTree = "<group>"; };
 		D3D03FB12AF27571006BD5C8 /* CodingSession.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodingSession.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3D03FB42AF27571006BD5C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3D03FB62AF27571006BD5C8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				CE782A712BF272F70097DC8B /* ViewControllerCell.swift */,
 				CE782A6D2BF26C990097DC8B /* GalleryViewModel.swift */,
 				CE782A732BF282810097DC8B /* CollectionViewDataSource.swift */,
+				CEF869A72BF2972A00BF441D /* CellController.swift */,
 				CEF869A32BF28B0B00BF441D /* Constants.swift */,
 				CE782A6F2BF2715A0097DC8B /* PhotosProvider.swift */,
 				CEF869A52BF293C200BF441D /* AssetMapper.swift */,
@@ -190,6 +193,7 @@
 				CE782A702BF2715A0097DC8B /* PhotosProvider.swift in Sources */,
 				CE782A742BF282810097DC8B /* CollectionViewDataSource.swift in Sources */,
 				CEF869A42BF28B0B00BF441D /* Constants.swift in Sources */,
+				CEF869A82BF2972A00BF441D /* CellController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

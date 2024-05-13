@@ -27,12 +27,14 @@ struct AssetMapper {
     }()
     
     private let manager: PHImageManager
+    private let imageSize: Double
     
-    init(manager: PHImageManager) {
+    init(manager: PHImageManager, imageSize: Double) {
         self.manager = manager
+        self.imageSize = imageSize
     }
     
-    func map(asset: PHAsset, imageSize: Double) -> CellController {
+    func map(asset: PHAsset) -> CellController {
         let title = formatter.string(from: asset.duration) ?? ""
         
         let controller = CellController(title: title) {
