@@ -9,11 +9,17 @@ import Foundation
 import Photos
 
 protocol VideoProviderProtocol {
-    func getVideos() -> [PHAsset]
+    func getVideos() -> [CellController]
 }
 //TODO: - Make static func
 class VideoProvider: VideoProviderProtocol {
-    func getVideos() -> [PHAsset] {
+    private let mapper: AssetMapper
+    
+    init(mapper: AssetMapper) {
+        self.mapper = mapper
+    }
+    
+    func getVideos() -> [CellController] {
         let fetchOptions = PHFetchOptions()
         fetchOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.video.rawValue)
         
@@ -24,6 +30,6 @@ class VideoProvider: VideoProviderProtocol {
             videoAssets.append(asset)
         }
         
-        return videoAssets
+        return videoAssets.map(mapper.map(asset:))
     }
 }

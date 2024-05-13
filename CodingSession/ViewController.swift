@@ -8,8 +8,6 @@
 import UIKit
 import RxSwift
 import SnapKit
-import Accelerate
-import Photos
 import RxCocoa
 
 class ViewController: UIViewController {

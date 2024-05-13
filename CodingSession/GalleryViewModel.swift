@@ -15,18 +15,12 @@ class GalleryViewModel {
     private(set) var cellControllers: PublishRelay<[CellController]> = .init()
     private(set) var settingsButtonHidden: BehaviorRelay<Bool> = .init(value: true)
     
-    private let mapper: (PHAsset) -> CellController
-    
-    init(videoProvider: VideoProviderProtocol, mapper: @escaping (PHAsset) -> CellController) {
+    init(videoProvider: VideoProviderProtocol) {
         self.videoProvider = videoProvider
-        self.mapper = mapper
     }
     
     private func fetchPhotos() {
-        let videos = videoProvider.getVideos()
-        let cellControllers = videos.map { self.mapper($0) }
-        
-        self.cellControllers.accept(cellControllers)
+        self.cellControllers.accept(videoProvider.getVideos())
     }
     
     func start() {

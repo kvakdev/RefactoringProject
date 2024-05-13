@@ -14,13 +14,20 @@ class ViewControllerCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        setupImageView()
+        setupDurationLabel()
+    }
+    
+    private func setupImageView() {
         contentView.addSubview(thumbImageView)
         thumbImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         thumbImageView.contentMode = .scaleAspectFill
         thumbImageView.clipsToBounds = true
-        
+    }
+    
+    private func setupDurationLabel() {
         contentView.addSubview(durationLabel)
         durationLabel.snp.makeConstraints { make in
             make.leading.equalTo(8)
