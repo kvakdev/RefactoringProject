@@ -8,10 +8,6 @@
 import Foundation
 import Photos
 
-protocol VideoProviderProtocol {
-    func getVideos() -> [CellController]
-}
-//TODO: - Make static func
 class VideoProvider: VideoProviderProtocol {
     private let mapper: AssetMapper
     

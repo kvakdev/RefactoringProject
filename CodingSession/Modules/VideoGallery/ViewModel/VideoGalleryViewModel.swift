@@ -9,7 +9,7 @@ import Foundation
 import Photos
 import RxRelay
 
-class GalleryViewModel {
+class VideoGalleryViewModel {
     private let videoProvider: VideoProviderProtocol
     
     private(set) var cellControllers: PublishRelay<[CellController]> = .init()

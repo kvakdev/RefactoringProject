@@ -10,16 +10,16 @@ import RxSwift
 import SnapKit
 import RxCocoa
 
-class ViewController: UIViewController {
+class VideoGalleryController: UIViewController {
 
     private let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private lazy var settingsButton = UIButton.makeSettingsButton()
     private lazy var dataSource = GalleryCollectionViewDataSource(collectionView: collectionView, itemSize: UIConstants.itemSize)
-    private let viewModel: GalleryViewModel
+    private let viewModel: VideoGalleryViewModel
     
     private let disposeBag = DisposeBag()
     
-    init(viewModel: GalleryViewModel) {
+    init(viewModel: VideoGalleryViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
