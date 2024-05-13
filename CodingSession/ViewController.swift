@@ -31,13 +31,28 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupCollectionView()
+        
         viewModel.cellControllers.observe(on: MainScheduler()).subscribe { [weak self] controllers in
             self?.dataSource.set(cellControllers: controllers)
         }
         .disposed(by: disposeBag)
         
-        setupCollectionView()
-        viewModel.fetchPhotos()
+        viewModel.requestSettings = { [weak self] in
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "Access denied", message: "Please go to settings and allow access to videos", preferredStyle: .actionSheet)
+                let settingsAction = UIAlertAction(title: "Settings", style: .default) { _ in
+                    self?.dismiss(animated: true) {
+                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                    }
+                }
+                alert.addAction(settingsAction)
+                
+                self?.present(alert, animated: true)
+            }
+        }
+        
+        viewModel.start()
     }
     
     private func setupCollectionView() {

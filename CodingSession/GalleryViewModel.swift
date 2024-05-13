@@ -16,15 +16,38 @@ class GalleryViewModel {
     
     private let mapper: (PHAsset) -> CellController
     
+    var requestSettings: (() -> Void)?
+    
     init(videoProvider: VideoProviderProtocol, mapper: @escaping (PHAsset) -> CellController) {
         self.videoProvider = videoProvider
         self.mapper = mapper
     }
     
-    func fetchPhotos() {
+    private func fetchPhotos() {
         let videos = videoProvider.getVideos()
         let cellControllers = videos.map { self.mapper($0) }
         
         self.cellControllers.accept(cellControllers)
+    }
+    
+    func start() {
+        checkAuthorizationStatus()
+    }
+    
+    func checkAuthorizationStatus() {
+        PHPhotoLibrary.requestAuthorization(for: .readWrite) { [weak self] status in
+            switch status {
+            case .notDetermined:
+                self?.fetchPhotos()
+            case .restricted:
+                self?.requestSettings?()
+            case .denied:
+                self?.requestSettings?()
+            case .authorized:
+                self?.fetchPhotos()
+            case .limited:
+                self?.fetchPhotos()
+            }
+        }
     }
 }
