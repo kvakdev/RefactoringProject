@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let vm = GalleryViewModel(videoProvider: VideoProvider(),
                                   cellWidth: UIConstants.itemSize.width,
-                                  mapper: AssetMapper.map(asset:imageSize:))
+                                  mapper: AssetMapper(manager: .default()).map(asset:imageSize:))
         
         window.rootViewController = ViewController(viewModel: vm)
         window.makeKeyAndVisible()
