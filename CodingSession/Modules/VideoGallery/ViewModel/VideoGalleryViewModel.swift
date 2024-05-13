@@ -6,37 +6,32 @@
 //
 
 import Foundation
-import Photos
 import RxRelay
 
 class VideoGalleryViewModel {
     private let videoProvider: VideoProviderProtocol
+    private let accessProvider: PhotosAccessProviderProtocol
     
     private(set) var cellControllers: PublishRelay<[CellController]> = .init()
     private(set) var settingsButtonHidden: BehaviorRelay<Bool> = .init(value: true)
     
-    init(videoProvider: VideoProviderProtocol) {
+    init(videoProvider: VideoProviderProtocol, accessProvider: PhotosAccessProviderProtocol) {
         self.videoProvider = videoProvider
+        self.accessProvider = accessProvider
     }
     
     private func fetchPhotos() {
         self.cellControllers.accept(videoProvider.getVideos())
     }
     
-    func start() {
-        checkAuthorizationStatus()
-    }
-    
-    private func checkAuthorizationStatus() {
-        PHPhotoLibrary.requestAuthorization(for: .readWrite) { [weak self] status in
-            switch status {
-            case .restricted, .denied:
-                self?.settingsButtonHidden.accept(false)
-            case .authorized, .limited, .notDetermined:
-                self?.fetchPhotos()
-            @unknown default:
-                self?.fetchPhotos()
-            }
+    func start() async {
+        let isAllowed = await accessProvider.isAllowed()
+        
+        if isAllowed {
+            fetchPhotos()
+        } else {
+            settingsButtonHidden.accept(false)
         }
     }
 }
+

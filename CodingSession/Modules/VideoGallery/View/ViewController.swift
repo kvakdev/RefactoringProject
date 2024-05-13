@@ -34,7 +34,9 @@ class VideoGalleryController: UIViewController {
         setupUI()
         bind()
        
-        viewModel.start()
+        Task {
+            await viewModel.start()
+        }
     }
     
     private func setupUI() {
